@@ -17,6 +17,6 @@ variable "aws_region" {
 }
 
 resource "aws_s3_bucket" "demo_bucket" {
-  bucket = "demo-devops-pipeline-7six3nine3676-simson"
+  bucket = "demo-devops-pipeline-7six3nine3676-sims"
   acl    = "private"
 }
