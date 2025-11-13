@@ -33,6 +33,13 @@ jobs:
          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
          AWS_REGION: ${{ secrets.AWS_REGION }}
+      - name: Update CR Status in ServiceNow
+        run: |
+          curl -X PATCH "https://${{ secrets.SERVICENOW_INSTANCE }}/api/now/table/change_request/CHANGE_SYS_ID" \
+          --user "${{ secrets.SERVICENOW_USERNAME }}:${{ secrets.SERVICENOW_PASSWORD }}" \
+          --header "Content-Type: application/json" \
+          --data '{"state":"implemented"}'
+
 
 
 
