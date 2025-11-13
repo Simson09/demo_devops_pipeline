@@ -1,0 +1,41 @@
+name: ServiceNow Change Request Pipeline
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  create_service_now_cr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Create Change Request in ServiceNow
+        run: |
+          curl -X POST "https://${{ secrets.SERVICENOW_INSTANCE }}/api/now/table/change_request" \
+          --user "${{ secrets.SERVICENOW_USERNAME }}:${{ secrets.SERVICENOW_PASSWORD }}" \
+          --header "Accept: application/json" \
+          --header "Content-Type: application/json" \
+          --data '{"short_description":"Demo CR from GitHub Action"}'
+
+      - name: Wait For Approval (Demo)
+        run: sleep 60
+        
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        env:
+         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+         AWS_REGION: ${{ secrets.AWS_REGION }}
+
+
+
+
+
+
