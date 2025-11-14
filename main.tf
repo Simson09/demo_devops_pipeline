@@ -17,6 +17,28 @@ variable "aws_region" {
 }
 
 resource "aws_s3_bucket" "demo_bucket" {
-  bucket = "demo-devops-pipeline-7six3nine3676-sims"
+  bucket = "demo-devops-pipeline-7six3nine3676-sim"
   acl    = "private"
 }
+resource "aws_iam_policy" "example_policy" {
+  name        = "example-policy"
+  description = "Example IAM policy created with Terraform"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = [
+          "s3:ListBucket",
+          "s3:GetObject"
+        ]
+        Resource = [
+          "arn:aws:s3:::my-bucket",
+          "arn:aws:s3:::my-bucket/*"
+        ]
+      }
+    ]
+  })
+}
+
