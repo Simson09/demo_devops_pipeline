@@ -17,7 +17,7 @@ variable "aws_region" {
 }
 
 resource "aws_s3_bucket" "demo_bucket" {
-  bucket = "demo-devops-pipeline-7six3nine3676-sim"
+  bucket = "demo-devops-pipeline-7six3nine3676-si"
   acl    = "private"
 }
 resource "aws_iam_policy" "example_policy" {
@@ -35,7 +35,9 @@ resource "aws_iam_policy" "example_policy" {
         ]
         Resource = [
           "arn:aws:s3:::my-bucket",
-          "arn:aws:s3:::my-bucket/*"
+          "arn:aws:s3:::my-bucket/*",
+"arn:aws:s3:::your-bucket",
+          "arn:aws:s3:::your-bucket/*"
         ]
       }
     ]
